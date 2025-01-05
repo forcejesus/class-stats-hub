@@ -1,9 +1,8 @@
 import api from '@/lib/axios';
-import { LoginRequest, LoginResponse, User } from '@/types/auth';
 import { jwtDecode } from 'jwt-decode';
 
 export const authService = {
-  login: async (data: LoginRequest): Promise<LoginResponse> => {
+  login: async (data) => {
     const response = await api.post('/api/login', data);
     return response.data;
   },
@@ -12,16 +11,16 @@ export const authService = {
     localStorage.removeItem('token');
   },
 
-  isAuthenticated: (): boolean => {
+  isAuthenticated: () => {
     return !!localStorage.getItem('token');
   },
 
-  getCurrentUser: (): User | null => {
+  getCurrentUser: () => {
     const token = localStorage.getItem('token');
     if (!token) return null;
     
     try {
-      const decoded = jwtDecode<User>(token);
+      const decoded = jwtDecode(token);
       return {
         id: decoded.id,
         name: decoded.name,
