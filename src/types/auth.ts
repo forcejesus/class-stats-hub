@@ -7,16 +7,16 @@ export interface AuthResponse {
   token: string;
 }
 
+export interface School {
+  _id: string;
+  libelle: string;
+  adresse: string;
+  ville: string;
+}
+
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
-}
-
-export interface Teacher extends User {
-  subject?: string;
-}
-
-export interface Student extends User {
-  class?: string;
+  ecole: School;
 }
