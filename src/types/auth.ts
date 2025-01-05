@@ -20,3 +20,7 @@ export interface User {
   email: string;
   ecole: School;
 }
+
+// Aliases for the auth service
+export type LoginRequest = LoginCredentials;
+export type LoginResponse = AuthResponse;
