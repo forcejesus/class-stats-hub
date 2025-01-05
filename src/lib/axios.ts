@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://kahoot.nos-apps.com/api',
+  baseURL: 'http://kahoot.nos-apps.com',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
