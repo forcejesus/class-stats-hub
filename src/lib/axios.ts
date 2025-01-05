@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://kahoot.nos-apps.com/api',
+  baseURL: 'http://kahoot.nos-apps.com/api',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -13,6 +13,11 @@ api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  }
+  
+  // Force HTTP protocol
+  if (config.url && config.url.startsWith('https://')) {
+    config.url = config.url.replace('https://', 'http://');
   }
 
   console.log('Request Config:', {
