@@ -13,6 +13,12 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  
+  // Force HTTP protocol
+  if (config.url && config.url.startsWith('https://')) {
+    config.url = config.url.replace('https://', 'http://');
+  }
+  
   return config;
 }, (error) => {
   return Promise.reject(error);
