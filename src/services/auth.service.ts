@@ -4,8 +4,15 @@ import { jwtDecode } from 'jwt-decode';
 
 export const authService = {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const { data } = await api.post<AuthResponse>('/login', credentials);
-    return data;
+    console.log('Envoi de la requête de connexion:', credentials);
+    try {
+      const { data } = await api.post<AuthResponse>('/login', credentials);
+      console.log('Réponse de la requête de connexion:', data);
+      return data;
+    } catch (error) {
+      console.error('Erreur lors de la requête de connexion:', error);
+      throw error;
+    }
   },
   
   logout() {

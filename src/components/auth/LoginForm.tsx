@@ -18,19 +18,35 @@ export const LoginForm = () => {
     e.preventDefault();
     setLoading(true);
     
+    console.log('Tentative de connexion avec:', { email, password });
+    
     try {
       const response = await authService.login({ email, password });
-      localStorage.setItem('token', response.token);
-      toast({
-        title: "Connexion réussie",
-        description: "Vous allez être redirigé vers le tableau de bord",
-      });
-      navigate('/dashboard');
-    } catch (error) {
+      console.log('Réponse du serveur:', response);
+      
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        toast({
+          title: "Connexion réussie",
+          description: "Vous allez être redirigé vers le tableau de bord",
+        });
+        navigate('/dashboard');
+      } else {
+        console.error('Token manquant dans la réponse');
+        toast({
+          variant: "destructive",
+          title: "Erreur de connexion",
+          description: "Une erreur est survenue lors de la connexion",
+        });
+      }
+    } catch (error: any) {
+      console.error('Erreur de connexion:', error);
+      console.error('Détails de l\'erreur:', error.response?.data);
+      
       toast({
         variant: "destructive",
         title: "Erreur de connexion",
-        description: "Email ou mot de passe incorrect",
+        description: error.response?.data?.message || "Email ou mot de passe incorrect",
       });
     } finally {
       setLoading(false);
