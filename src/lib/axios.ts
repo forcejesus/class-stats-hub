@@ -1,12 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://kahoot.nos-apps.com/api',
+  baseURL: 'https://kahoot.nos-apps.com/api',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
-  // Ajout d'un timeout
   timeout: 10000,
 });
 
@@ -14,11 +13,6 @@ api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
-  }
-  
-  // Force HTTP protocol
-  if (config.url && config.url.startsWith('https://')) {
-    config.url = config.url.replace('https://', 'http://');
   }
 
   console.log('Request Config:', {
@@ -51,7 +45,6 @@ api.interceptors.response.use(
       window.location.href = '/';
     }
 
-    // Personnalisation du message d'erreur
     if (error.code === 'ERR_NETWORK') {
       error.message = "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet ou réessayer plus tard.";
     }
