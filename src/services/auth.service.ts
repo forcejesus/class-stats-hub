@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 
 export const authService = {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const { data } = await api.post<AuthResponse>('/api/login', credentials);
+    const { data } = await api.post<AuthResponse>('/login', credentials);
     return data;
   },
   
